@@ -1,0 +1,40 @@
+# set application port num
+server:
+  port: 2580
+  
+# set application name to be display in service registry
+spring:
+  application:
+    name: API-Gateway-Uber
+  
+  cloud:
+    gateway:
+      mvc:
+        routes:
+        - id: UBERUSERS
+          uri: lb://UBERUSERS
+          predicates:
+          - Path=/user/**
+          
+        - id: UBERDRIVER
+          uri: lb://UBERDRIVER
+          predicates:
+          - Path=/driver/**
+          
+        - id: UBERPRIVILIGE
+          uri: lb://UBERPRIVILIGE
+          predicates:
+          - Path=/privilege/**   
+  
+    
+# set your application at eureka service registry    
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone : http://localhost:8761/eureka/
+  instance:
+    hostname: localhost
+      
+# Setting related API gateway routing   
